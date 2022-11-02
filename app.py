@@ -1,15 +1,13 @@
-from pyexpat import model
 import streamlit as st
-import pandas as pd
-import pickle 
+import pickle
 
 
-model = pickle.load(open('model.pkl','rb'))
+model = pickle.load(open('model.pkl', 'rb'))
 
 
-season = pickle.load(open('season.pkl','rb'))
-crop = pickle.load(open('crop.pkl','rb'))
-state = pickle.load(open('state.pkl','rb'))
+season = pickle.load(open('season.pkl', 'rb'))
+crop = pickle.load(open('crop.pkl', 'rb'))
+state = pickle.load(open('state.pkl', 'rb'))
 
 st.markdown('''
 <style>
@@ -24,9 +22,8 @@ st.markdown('''
 }
 
 </style>
-'''
-, unsafe_allow_html=True,
-)
+''', unsafe_allow_html=True,
+            )
 
 st.title('Crop Production Prediction')
 
@@ -49,7 +46,7 @@ with st.expander('Inputs'):
         area = st.number_input('Insert Area of field(Acre)')
 
 if st.button('Predict'):
-    data = pickle.load(open('datafram.pkl','rb'))
+    data = pickle.load(open('datafram.pkl', 'rb'))
     data['Area'] = area
     selected_state = "State_Name_"+selected_state
     selected_season = "Season_"+selected_season
@@ -59,4 +56,4 @@ if st.button('Predict'):
     data[selected_state] = 1
     result = model.predict(data)[0]
     result_text = "Yield Prediction {price:.2f} Tonnes"
-    st.subheader(result_text.format(price = result))
+    st.subheader(result_text.format(price=result))
